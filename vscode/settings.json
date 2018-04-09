@@ -1,0 +1,32 @@
+// Place your settings in this file to overwrite the default settings
+{
+  "editor.fontSize": 16,
+  "editor.fontFamily": "'Fira Code', 'Courier New', monospace, 'Droid Sans Fallback'",
+
+  "editor.renderWhitespace": "boundary",
+  "editor.tabSize": 2,
+  "editor.wordWrap": "off",
+
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.stack-work": true,
+    "**/.gc-roots": true,
+    "*.hi": true,
+    "*.dyn_hi": true,
+    "*.js_hi": true,
+    "*.js_dyn_hi": true,
+    "*.o": true,
+    "*.dump-hi": true
+  },
+
+  "window.zoomLevel": 0,
+  "workbench.colorTheme": "One Monokai",
+  "workbench.iconTheme": "vs-seti",
+
+  "git.autofetch": false
+}
+
