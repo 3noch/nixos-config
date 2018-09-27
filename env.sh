@@ -2,6 +2,9 @@
 
 # Based on https://github.com/grafted-in/dev-onboarding/blob/master/env.sh
 
+export VISUAL=vim
+export EDITOR="$VISUAL"
+
 export NIX_CHANNEL_TRACK="nixpkgs-unstable"
 export NIX_CHANNEL_REPO="$HOME/nixpkgs"
 export NIX_PATH="nixpkgs=$NIX_CHANNEL_REPO:$NIX_PATH"
