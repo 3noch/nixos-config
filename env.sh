@@ -82,7 +82,10 @@ function user-packages() {
   echo fira-mono
   echo inconsolata
 
+  echo colordiff
+  echo kdiff3
   echo atom
+  echo gitAndTools.hub
   echo fzf
   echo gimp
   echo libreoffice
@@ -91,6 +94,10 @@ function user-packages() {
   echo tmate
   echo vlc
   echo zoom-us
+  echo spectacle
+  echo wine
+  echo jq
+  echo psmisc
 
   # Mine
   #echo haskellPackages-mine.twitch-cli
@@ -111,6 +118,7 @@ function vscode-extensions() {
   echo timonwong.shellcheck
   echo vigoo.stylish-haskell
   #echo whatwedo.twig
+  echo zjhmale.idris
 }
 
 
@@ -202,6 +210,11 @@ function user-build() {
   # Apply packages
   nix-env -f '<nixpkgs>' --remove-all -iA $(user-packages)
 
+  # Idris stuff from https://d3g5gsiof5omrk.cloudfront.net/nixos/unstable/nixos-18.09pre143771.a8c71037e04/nixexprs.tar.xz
+  nix-env -i \
+    /nix/store/q99rl8mw63dplj7hbf973n9aszxilx93-idris-1.3.0.drv \
+    /nix/store/nh67av50k1p803cwpxzmamar6zz646ni-idringen-0.1.0.3.drv
+
   # Apply various configurations
   user-apply-app-config
 }
@@ -209,5 +222,9 @@ function user-build() {
 function clear-nix-cache {
   # Sometimes the cache for pre-built binaries is out of date.
   sudo rm /nix/var/nix/binary-cache-v3.sqlite*
+}
+
+function nix-build-closure-size {
+  du -sch $(nix-store -qR $(nix-build "$@" --no-out-link))
 }
 
