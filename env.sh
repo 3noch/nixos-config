@@ -2,122 +2,83 @@
 
 # Based on https://github.com/grafted-in/dev-onboarding/blob/master/env.sh
 
-NIX_PATH="nixpkgs=/nix/var/nix/profiles/per-user/$(whoami)/channels/nixpkgs":$NIX_PATH
-export NIX_PATH
-
-
-nixpkgs_channel=https://nixos.org/channels/nixos-17.09
+export NIX_CHANNEL_TRACK="nixpkgs-unstable"
+export NIX_CHANNEL_REPO="$HOME/nixpkgs"
+export NIX_PATH="nixpkgs=$NIX_CHANNEL_REPO:$NIX_PATH"
 
 env_script_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 function user-packages() {
-  # Customized packages
-  echo borgbackup
-  echo google-chrome
-  echo htop
-  echo thunderbird
-
-  # PHP
-  #echo myPhp
-  #echo phpPackages.composer
-
-  # JS
-  #echo nodejs
-  #echo nodePackages.gulp
-
-  # Java
-  echo jdk
-
-  # Common tools
-  echo cloc
-  echo curl
-  echo gnugrep
-  echo gnumake
-  echo gzip
-  echo inotify-tools
-  echo unzip
-  echo less
-  echo tmux
-  echo tree
-  echo wget
-  echo xclip
-  echo zip
-
-  # Nix tools
-  echo nix
-  echo nix-prefetch-scripts
-  echo nix-repl
-
-  # Security tools
-  echo gnupg
-  echo keybase
-  echo keybase-gui
-  echo ssh-ident
-
-  echo lastpass-cli
-
-  # Tools for working with code
-  echo git
-  echo git-crypt
-  echo shellcheck
-  echo vim
-  echo vscode
-
-  # Haskell-specific tools
-  echo cabal-install
-  echo ghc
-  echo haskellPackages.ghcid
-  echo haskellPackages.hlint
-  echo haskellPackages-mine.intero
-  echo haskellPackages.stack
-  #echo haskellPackages.stack-run
-  echo haskellPackages.stylish-haskell
-
   #echo haskellPackages-mine.hlint
   #echo haskellPackages-mine.stylish-haskell
+  #echo haskellPackages-mine.twitch-cli
+  echo atom
+  echo borgbackup
+  echo cabal-install
+  echo cloc
+  echo colordiff
+  echo curl
+  echo fzf
+  echo ghc
+  echo gimp
+  echo git
+  echo git-crypt
+  echo gitAndTools.hub
+  echo gnugrep
+  echo gnumake
+  echo gnupg
+  echo google-chrome
+  echo gzip
+  echo haskellPackages-mine.intero
+  echo haskellPackages.ghcid
+  echo haskellPackages.hlint
+  echo haskellPackages.stack
+  echo haskellPackages.stylish-haskell
+  echo htop
+  echo inotify-tools
+  echo jq
+  echo kdiff3
+  echo keybase
+  echo keybase-gui
+  echo lastpass-cli
+  echo less
+  echo libreoffice
+  echo nix-prefetch-scripts
+  echo p7zip
+  echo psmisc
+  echo shellcheck
+  echo spectacle
+  echo steam
+  echo thunderbird
+  echo tmate
+  echo tmux
+  echo tree
+  echo unzip
+  echo vim
+  echo vlc
+  echo vscode
+  echo wget
+  echo wine
+  echo xclip
+  echo zip
+  echo zoom-us
 
   # Fonts
   echo fira
   echo fira-code
   echo fira-mono
   echo inconsolata
-
-  echo colordiff
-  echo kdiff3
-  echo atom
-  echo gitAndTools.hub
-  echo fzf
-  echo gimp
-  echo libreoffice
-  echo p7zip
-  echo steam
-  echo tmate
-  echo vlc
-  echo zoom-us
-  echo spectacle
-  echo wine
-  echo jq
-  echo psmisc
-
-  # Mine
-  #echo haskellPackages-mine.twitch-cli
-  echo myNvim
 }
 
 function vscode-extensions() {
-  #echo HvyIndustries.crane
-  echo Vans.haskero
+  #echo Vans.haskero
   echo azemoh.one-monokai
   echo bbenoist.Nix
-  #echo felixfbecker.php-debug
-  #echo felixfbecker.php-intellisense
   echo hoovercj.haskell-linter
   echo jcanero.hoogle-vscode
   echo justusadam.language-haskell
-  #echo selvinortiz.twig-for-craft-2
   echo timonwong.shellcheck
   echo vigoo.stylish-haskell
-  #echo whatwedo.twig
   echo zjhmale.idris
 }
 
@@ -128,19 +89,15 @@ function user-nix-config() {
   allowUnfree = true;
 
   packageOverrides = pkgs: {
-    myPhp  = import "$env_script_path/php.nix" { inherit pkgs; };
-
-    myNvim = pkgs.callPackage "$env_script_path/nvim" {};
-
     haskellPackages-mine = pkgs.haskellPackages.override {
       overrides = self: super: {
-        haskell-src-exts-HEAD = self.callCabal2nix "haskell-src-exts" (pkgs.fetchFromGitHub {
-          owner  = "haskell-suite";
-          repo   = "haskell-src-exts";
-          rev    = "935f6f0915e89c314b686bdbdc6980c72335ba3c";
-          sha256 = "1v3c1bd5q07qncqfbikvs8h3r4dr500blm5xv3b4jqqv69f0iam9";
-        }) {};
-        haskell-src-exts = self.haskell-src-exts-HEAD;
+        #haskell-src-exts-HEAD = self.callCabal2nix "haskell-src-exts" (pkgs.fetchFromGitHub {
+        #  owner  = "haskell-suite";
+        #  repo   = "haskell-src-exts";
+        #  rev    = "935f6f0915e89c314b686bdbdc6980c72335ba3c";
+        #  sha256 = "1v3c1bd5q07qncqfbikvs8h3r4dr500blm5xv3b4jqqv69f0iam9";
+        #}) {};
+        #haskell-src-exts = self.haskell-src-exts-HEAD;
 
         #hlint = super.hlint.overrideAttrs (_: { haskell-src-exts = self.haskell-src-exts-HEAD; });
         #stylish-haskell = super.stylish-haskell.overrideAttrs (_: { haskell-src-exts = self.haskell-src-exts-HEAD; });
@@ -152,8 +109,8 @@ function user-nix-config() {
           sha256 = "1yr53r3h0p12dj2cyc3j6r71nyf0g93x1xbra9205f6qp3ymc205";
         }) {};
 
-        intero = pkgs.haskell.lib.dontCheck super.intero;
-        stylish-haskell = pkgs.haskell.lib.doJailbreak super.stylish-haskell;
+        #intero = pkgs.haskell.lib.dontCheck super.intero;
+        #stylish-haskell = pkgs.haskell.lib.doJailbreak super.stylish-haskell;
       };
     };
   };
@@ -188,20 +145,26 @@ function user-apply-app-config() {
   user-apply-vscode-config
 }
 
-function user-set-channel() {
-  nix-channel --add "$nixpkgs_channel" nixpkgs
+function user-init-channel() {
+  if [ ! -d "$NIX_CHANNEL_REPO" ]; then
+    nix-shell -p git --run "git clone https://github.com/nixos/nixpkgs.git ""$NIX_CHANNEL_REPO"" && git -C ""$NIX_CHANNEL_REPO"" checkout ""$(get-latest-channel-hash)"""
+  fi
 }
 
 function user-upgrade-channel() {
-  user-set-channel
-  nix-channel --update
+  user-init-channel
+  nix-shell -p git --run "git -C ""$NIX_CHANNEL_REPO"" checkout ""$(get-latest-channel-hash)"""
+}
+
+function get-latest-channel-hash() {
+  curl -sL "https://nixos.org/channels/$NIX_CHANNEL_TRACK/git-revision"
 }
 
 function user-build() {
-  source "${BASH_SOURCE[0]}" # Be sure to use the most recent version of this file
+  source "${BASH_SOURCE[0]}" # Be sure to use the most recent version of this file.
 
   # Apply the nixpkgs channel
-  user-set-channel
+  user-init-channel
 
   # Apply nixpkgs config
   mkdir -p "$HOME/.config/nixpkgs"
@@ -211,9 +174,9 @@ function user-build() {
   nix-env -f '<nixpkgs>' --remove-all -iA $(user-packages)
 
   # Idris stuff from https://d3g5gsiof5omrk.cloudfront.net/nixos/unstable/nixos-18.09pre143771.a8c71037e04/nixexprs.tar.xz
-  nix-env -i \
-    /nix/store/q99rl8mw63dplj7hbf973n9aszxilx93-idris-1.3.0.drv \
-    /nix/store/nh67av50k1p803cwpxzmamar6zz646ni-idringen-0.1.0.3.drv
+  #nix-env -i \
+  #  /nix/store/q99rl8mw63dplj7hbf973n9aszxilx93-idris-1.3.0.drv \
+  #  /nix/store/nh67av50k1p803cwpxzmamar6zz646ni-idringen-0.1.0.3.drv
 
   # Apply various configurations
   user-apply-app-config
@@ -225,6 +188,6 @@ function clear-nix-cache {
 }
 
 function nix-build-closure-size {
-  du -sch $(nix-store -qR $(nix-build "$@" --no-out-link))
+  du -sch "$(nix-store -qR "$(nix-build "$@" --no-out-link)")"
 }
 
