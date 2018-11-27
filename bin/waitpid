@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+pid=${1:?Specify a PID}
+tail --pid=$1 -f /dev/null
+
+# Where this feature is not supported:
+# while kill -0 $1 2> /dev/null; do sleep 1; done;

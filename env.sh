@@ -11,6 +11,8 @@ export NIX_PATH="nixpkgs=$NIX_CHANNEL_REPO:$NIX_PATH"
 
 env_script_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
+export PATH="$env_script_path/bin":$PATH
+
 function user-packages() {
   #echo haskellPackages-mine.hlint
   #echo haskellPackages-mine.stylish-haskell
@@ -46,7 +48,7 @@ function user-packages() {
   echo lastpass-cli
   echo less
   echo libreoffice
-  echo nix-prefetch-github
+  #echo nix-prefetch-github
   echo nix-prefetch-scripts
   echo obelisk
   echo p7zip

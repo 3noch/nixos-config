@@ -16,4 +16,7 @@
   services.openssh.enable = true;
 
   networking.firewall.allowedTCPPorts = [ 80 8000 8001 ];
+
+  networking.hosts = {
+  };
 }

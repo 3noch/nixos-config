@@ -27,6 +27,7 @@
   "workbench.colorTheme": "One Monokai",
   "workbench.iconTheme": "vs-seti",
 
-  "git.autofetch": false
+  "git.autofetch": false,
+  "window.titleBarStyle": "custom"
 }
 
