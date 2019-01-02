@@ -14,8 +14,6 @@ env_script_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 export PATH="$env_script_path/bin":$PATH
 
 function user-packages() {
-  #echo haskellPackages-mine.hlint
-  #echo haskellPackages-mine.stylish-haskell
   #echo haskellPackages-mine.twitch-cli
   echo atom
   echo borgbackup
@@ -35,11 +33,11 @@ function user-packages() {
   echo gnupg
   echo google-chrome
   echo gzip
-  echo haskellPackages-mine.intero
+  #echo haskellPackages.intero
   echo haskellPackages.ghcid
   echo haskellPackages.hlint
   echo haskellPackages.stack
-  echo haskellPackages.stylish-haskell
+  echo haskellPackages-mine.stylish-haskell
   echo htop
   echo imagemagick7
   echo inotify-tools
@@ -91,7 +89,7 @@ function vscode-extensions() {
 }
 
 
-function user-nix-config() {
+function user-apply-nix-config() {
   mkdir -p "$HOME/.config/nixpkgs"
   cat > "$HOME/.config/nixpkgs/config.nix" <<NIX
 import "$env_script_path/nixpkgs-config.nix"
@@ -148,7 +146,7 @@ function user-build() {
 
   # Apply nixpkgs config
   mkdir -p "$HOME/.config/nixpkgs"
-  user-nix-config > "$HOME/.config/nixpkgs/config.nix"
+  user-apply-nix-config
 
   # Apply packages
   nix-env -f '<nixpkgs>' --remove-all -iA $(user-packages)

@@ -25,7 +25,7 @@
         }) {};
 
         #intero = pkgs.haskell.lib.dontCheck super.intero;
-        #stylish-haskell = pkgs.haskell.lib.doJailbreak super.stylish-haskell;
+        stylish-haskell = pkgs.haskell.lib.doJailbreak super.stylish-haskell;
       };
     };
   };
