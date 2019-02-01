@@ -13,69 +13,6 @@ env_script_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 export PATH="$env_script_path/bin":$PATH
 
-function user-packages() {
-  #echo haskellPackages-mine.twitch-cli
-  echo atom
-  echo borgbackup
-  echo cabal-install
-  echo cloc
-  echo colordiff
-  echo curl
-  echo fzf
-  echo ghc
-  echo gimp
-  echo git
-  echo git-crypt
-  echo gitAndTools.hub
-  echo gitkraken
-  echo gnugrep
-  echo gnumake
-  echo gnupg
-  echo google-chrome
-  echo gzip
-  #echo haskellPackages.intero
-  echo haskellPackages.ghcid
-  echo haskellPackages.hlint
-  echo haskellPackages.stack
-  echo haskellPackages-mine.stylish-haskell
-  echo htop
-  echo imagemagick7
-  echo inotify-tools
-  echo jq
-  echo kdiff3
-  echo lastpass-cli
-  echo less
-  echo libreoffice
-  #echo nix-prefetch-github
-  echo nix-prefetch-scripts
-  echo obelisk
-  echo p7zip
-  echo psmisc
-  echo shellcheck
-  echo signal-desktop
-  echo spectacle
-  echo steam
-  echo thunderbird
-  echo tmate
-  echo tmux
-  echo tree
-  echo unzip
-  echo vim
-  echo vlc
-  echo vscode
-  echo wget
-  echo wine
-  echo xclip
-  echo zip
-  echo zoom-us
-
-  # Fonts
-  echo fira
-  echo fira-code
-  echo fira-mono
-  echo inconsolata
-}
-
 function vscode-extensions() {
   #echo Vans.haskero
   echo azemoh.one-monokai
@@ -149,7 +86,7 @@ function user-build() {
   user-apply-nix-config
 
   # Apply packages
-  nix-env -f '<nixpkgs>' --remove-all -iA $(user-packages)
+  # nix-env -f '<nixpkgs>' --remove-all -iA $(user-packages)
 
   # Idris stuff from https://d3g5gsiof5omrk.cloudfront.net/nixos/unstable/nixos-18.09pre143771.a8c71037e04/nixexprs.tar.xz
   #nix-env -i \
