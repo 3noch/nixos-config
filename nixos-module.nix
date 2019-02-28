@@ -1,8 +1,8 @@
-{ pkgs, config, ... }: let
+{ pkgs, config, ... }@args: let
 
   me = "elliot";
   my-nixpkgs = import (config.users.users.${me}.home + "/nixpkgs") {
-    config.allowUnfree = true;
+    config = import ./nixpkgs-config.nix;
   };
 
 in {
@@ -20,6 +20,7 @@ in {
   users.users.${me}.packages = (with pkgs; [
     # STABLE PACKAGES
     pkgs.google-chrome
+    git-crypt
 
   ]) ++ (with my-nixpkgs; [
     # USER-SPECIFIED NIXPKGS
@@ -34,12 +35,10 @@ in {
     ghc
     gimp
     git
-    git-crypt
     gitAndTools.hub
     gitkraken
     gnugrep
     gnumake
-    #gnupg
     gzip
     #haskellPackages.intero
     haskellPackages.ghcid

@@ -6,6 +6,7 @@
 
     haskellPackages-mine = pkgs.haskellPackages.override {
       overrides = self: super: {
+
         #haskell-src-exts-HEAD = self.callCabal2nix "haskell-src-exts" (pkgs.fetchFromGitHub {
         #  owner  = "haskell-suite";
         #  repo   = "haskell-src-exts";
