@@ -21,6 +21,8 @@ in {
     # STABLE PACKAGES
     pkgs.google-chrome
     git-crypt
+    gnupg
+    pinentry_qt5
 
   ]) ++ (with my-nixpkgs; [
     # USER-SPECIFIED NIXPKGS
@@ -31,6 +33,7 @@ in {
     cloc
     colordiff
     curl
+    firefox
     fzf
     ghc
     gimp
@@ -89,7 +92,7 @@ in {
   services.openssh.enable = true;
 
   programs.gnupg.agent = {
-    enable = true;
+    enable = false;
     enableSSHSupport = true;
   };
 

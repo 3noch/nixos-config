@@ -13,6 +13,8 @@ env_script_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 export PATH="$env_script_path/bin":$PATH
 
+gpg-agent --daemon --pinentry-program "$(nix-build -E '(import <nixpkgs> {}).pinentry_qt5' --no-out-link)/bin/pinentry"
+
 function vscode-extensions() {
   #echo Vans.haskero
   echo azemoh.one-monokai
