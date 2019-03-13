@@ -29,6 +29,7 @@ in {
     #haskellPackages-mine.twitch-cli
     atom
     borgbackup
+    brave
     cabal-install
     cloc
     colordiff
