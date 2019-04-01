@@ -17,6 +17,8 @@ in {
     vim
   ];
 
+  services.safeeyes.enable = true;
+
   users.users.${me}.packages = (with pkgs; [
     # STABLE PACKAGES
     pkgs.google-chrome
