@@ -64,6 +64,7 @@ in {
     obelisk
     p7zip
     psmisc
+    rlwrap
     shellcheck
     signal-desktop
     spectacle
