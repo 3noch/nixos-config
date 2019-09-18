@@ -17,7 +17,7 @@ in {
     vim
   ];
 
-  services.safeeyes.enable = true;
+  services.safeeyes.enable = false;
 
   users.users.${me}.packages = (with pkgs; [
     # STABLE PACKAGES
