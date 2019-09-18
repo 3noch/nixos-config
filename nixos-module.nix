@@ -90,6 +90,11 @@ in {
     inconsolata
   ]);
 
+  # For Steam to work (https://nixos.org/nixpkgs/manual/#sec-steam-play)
+  hardware.opengl.driSupport32Bit = true;
+  hardware.pulseaudio.support32Bit = true;
+  hardware.steam-hardware.enable = true;
+
   virtualisation.virtualbox.host.enable = true;
   virtualisation.docker.enable = true;
 
