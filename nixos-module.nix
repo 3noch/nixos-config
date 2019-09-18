@@ -1,7 +1,7 @@
 { pkgs, config, ... }@args: let
 
   me = "elliot";
-  my-nixpkgs = import (config.users.users.${me}.home + "/nixpkgs") {
+  my-nixpkgs = import (config.users.users.${me}.home + "/cfg/dep/nixpkgs") {
     config = import ./nixpkgs-config.nix;
   };
 
