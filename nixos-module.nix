@@ -121,4 +121,7 @@ in {
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="2c97", ATTRS{idProduct}=="0001", MODE="0660", GROUP="users"
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="2c97", ATTRS{idProduct}=="0004", MODE="0660", GROUP="users"
   '';
+
+  nix.binaryCachePublicKeys = [ "obsidian-tezos-kiln:WlSLNxlnEAdYvrwzxmNMTMrheSniCg6O4EhqCHsMvvo=" ];
+  nix.binaryCaches = [ "https://s3.eu-west-3.amazonaws.com/tezos-nix-cache" ];
 }
