@@ -78,7 +78,7 @@ in {
     vlc
     vscode
     wget
-    wine
+    #wine
     xclip
     zip
     zoom-us
