@@ -5,15 +5,15 @@
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
-export NIX_CHANNEL_TRACK="nixpkgs-unstable"
-export NIX_CHANNEL_REPO="$HOME/nixpkgs"
-export NIX_PATH="nixpkgs=$NIX_CHANNEL_REPO:$NIX_PATH"
-
 env_script_path=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+
+export NIX_CHANNEL_TRACK="nixpkgs-unstable"
+export NIX_CHANNEL_REPO="$env_script_path/dep/nixpkgs"
+export NIX_PATH="nixpkgs=$NIX_CHANNEL_REPO:$NIX_PATH"
 
 export PATH="$env_script_path/bin":$PATH
 
-"$(nix-build -E '(import <nixpkgs> {}).gnupg' --no-out-link)/bin/gpg-agent" --daemon --pinentry-program "$(nix-build -E '(import <nixpkgs> {}).pinentry_qt5' --no-out-link)/bin/pinentry"
+#"$(nix-build -E '(import <nixpkgs> {}).gnupg' --no-out-link)/bin/gpg-agent" --daemon --pinentry-program "$(nix-build -E '(import <nixpkgs> {}).pinentry_qt5' --no-out-link)/bin/pinentry"
 
 function vscode-extensions() {
   #echo Vans.haskero
@@ -62,26 +62,10 @@ function user-apply-app-config() {
   user-apply-vscode-config
 }
 
-function user-init-channel() {
-  if [ ! -d "$NIX_CHANNEL_REPO" ]; then
-    nix-shell -p git --run "git clone https://github.com/nixos/nixpkgs.git ""$NIX_CHANNEL_REPO"" && git -C ""$NIX_CHANNEL_REPO"" checkout ""$(get-latest-channel-hash)"""
-  fi
-}
-
-function user-upgrade-channel() {
-  user-init-channel
-  nix-shell -p git --run "git -C ""$NIX_CHANNEL_REPO"" checkout ""$(get-latest-channel-hash)"""
-}
-
-function get-latest-channel-hash() {
-  curl -sL "https://nixos.org/channels/$NIX_CHANNEL_TRACK/git-revision"
-}
-
 function user-build() {
   source "${BASH_SOURCE[0]}" # Be sure to use the most recent version of this file.
 
-  # Apply the nixpkgs channel
-  user-init-channel
+  nix-shell https://github.com/obsidiansystems/obelisk/archive/master.tar.gz -A command --run "ob thunk unpack $NIX_CHANNEL_REPO"
 
   # Apply nixpkgs config
   mkdir -p "$HOME/.config/nixpkgs"
@@ -107,4 +91,3 @@ function clear-nix-cache {
 function nix-build-closure-size {
   du -sch "$(nix-store -qR "$(nix-build "$@" --no-out-link)")"
 }
-
