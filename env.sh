@@ -89,5 +89,5 @@ function clear-nix-cache {
 }
 
 function nix-build-closure-size {
-  du -sch "$(nix-store -qR "$(nix-build "$@" --no-out-link)")"
+  du -sch $(nix-store -qR "$(nix-build "$@" --no-out-link)")
 }
