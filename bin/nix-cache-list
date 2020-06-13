@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+nix show-config | grep '^substituters' | sed 's/substituters = //' | tr ' ' '\n' | while read substituter; do if nix ping-store --store "$substituter"; then printf "%-50s available\n" $substituter; else printf "%-50s unavailable"; fi; done

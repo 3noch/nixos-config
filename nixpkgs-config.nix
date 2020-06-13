@@ -1,5 +1,6 @@
 {
   allowUnfree = true;
+  allowBroken = true;
 
   packageOverrides = pkgs: {
     obelisk = (import dep/obelisk {}).command;
