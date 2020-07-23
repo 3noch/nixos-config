@@ -94,6 +94,10 @@ in {
       fira-mono
       inconsolata
     ]);
+
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOBLTwoPAfJVfzwwWObnUfmP8c/0ocNnrd63iqQ0ftdY elliot@Elliots-MacBook-Pro.local" # my MacBook Pro
+    ];
   };
 
   # For Steam to work (https://nixos.org/nixpkgs/manual/#sec-steam-play)
