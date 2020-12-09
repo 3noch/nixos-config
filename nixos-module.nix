@@ -49,6 +49,7 @@ in {
       jq
       less
       nix-prefetch-scripts
+      nodejs-12_x # for vscode remote manual patching not to get GC'ed
       psmisc
       rlwrap
       shellcheck
@@ -71,6 +72,38 @@ in {
       fira-code
       fira-mono
       inconsolata
+
+      # Gnome extensions
+      gnomeExtensions.appindicator
+      gnomeExtensions.arc-menu
+      # gnomeExtensions.battery-status # not needed
+      gnomeExtensions.caffeine
+      gnomeExtensions.clipboard-indicator
+      gnomeExtensions.dash-to-dock
+      gnomeExtensions.dash-to-panel
+      gnomeExtensions.draw-on-your-screen
+      gnomeExtensions.drop-down-terminal
+      gnomeExtensions.emoji-selector
+      # gnomeExtensions.gsconnect
+      # gnomeExtensions.icon-hider # buggy reviews
+      gnomeExtensions.impatience
+      # gnomeExtensions.mediaplayer # deprecated
+      gnomeExtensions.mpris-indicator-button
+      gnomeExtensions.night-theme-switcher
+      # gnomeExtensions.no-title-bar
+      # gnomeExtensions.nohotcorner # removed
+      # gnomeExtensions.paperwm
+      # gnomeExtensions.pidgin-im-integration
+      gnomeExtensions.remove-dropdown-arrows
+      gnomeExtensions.sound-output-device-chooser
+      gnomeExtensions.system-monitor
+      gnomeExtensions.taskwhisperer
+      gnomeExtensions.tilingnome
+      gnomeExtensions.timepp
+      gnomeExtensions.topicons-plus
+      gnomeExtensions.window-corner-preview
+      gnomeExtensions.window-is-ready-remover
+      gnomeExtensions.workspace-matrix
     ];
   };
 
