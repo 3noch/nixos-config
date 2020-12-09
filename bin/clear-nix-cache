@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+exec sudo rm /nix/var/nix/binary-cache-v3.sqlite*

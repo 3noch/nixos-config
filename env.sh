@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-# Based on https://github.com/grafted-in/dev-onboarding/blob/master/env.sh
-
 export VISUAL=vim
 export EDITOR="$VISUAL"
 
@@ -13,81 +11,16 @@ export NIX_PATH="nixpkgs=$NIX_CHANNEL_REPO:$NIX_PATH"
 
 export PATH="$env_script_path/bin":$PATH
 
-#"$(nix-build -E '(import <nixpkgs> {}).gnupg' --no-out-link)/bin/gpg-agent" --daemon --pinentry-program "$(nix-build -E '(import <nixpkgs> {}).pinentry_qt5' --no-out-link)/bin/pinentry"
-
-function vscode-extensions() {
-  #echo Vans.haskero
-  echo azemoh.one-monokai
-  echo bbenoist.Nix
-  echo hoovercj.haskell-linter
-  echo jcanero.hoogle-vscode
-  echo justusadam.language-haskell
-  echo timonwong.shellcheck
-  echo vigoo.stylish-haskell
-  echo zjhmale.idris
-}
-
-
-function user-apply-nix-config() {
+function user-apply-config() {
   mkdir -p "$HOME/.config/nixpkgs"
-  cat > "$HOME/.config/nixpkgs/config.nix" <<NIX
-import "$env_script_path/nixpkgs-config.nix"
-NIX
-}
+  ln -sf "$env_script_path/nixpkgs-config.nix" "$HOME/.config/nixpkgs/config.nix"
 
-function user-apply-vscode-config() {
-  mkdir -p "$HOME/.config/Code/User"
-  cp -r "$env_script_path/vscode"/* "$HOME/.config/Code/User"
-
-  for ext in $(vscode-extensions); do
-    code --install-extension "$ext"
-  done
-}
-
-function user-apply-tmux-config() {
-  cat > "$HOME/.tmux.conf" <<TMUX
-set -g mouse on
-# to enable mouse scroll, see https://github.com/tmux/tmux/issues/145#issuecomment-150736967
-bind -n WheelUpPane if-shell -F -t = "#{mouse_any_flag}" "send-keys -M" "if -Ft= '#{pane_in_mode}' 'send-keys -M' 'copy-mode -e'"
-TMUX
-}
-
-function user-apply-app-config() {
-  # Stack can't install its own GHC on NixOS
-  stack config set system-ghc --global true
+  ln -sf "$env_script_path/tmux.conf" "$HOME/.tmux.conf"
 
   git config --global gpg.program gpg
-
-  user-apply-tmux-config
-  user-apply-vscode-config
 }
 
 function user-build() {
   source "${BASH_SOURCE[0]}" # Be sure to use the most recent version of this file.
-
-  nix-shell https://github.com/obsidiansystems/obelisk/archive/master.tar.gz -A command --run "ob thunk unpack $NIX_CHANNEL_REPO"
-
-  # Apply nixpkgs config
-  mkdir -p "$HOME/.config/nixpkgs"
-  user-apply-nix-config
-
-  # Apply packages
-  # nix-env -f '<nixpkgs>' --remove-all -iA $(user-packages)
-
-  # Idris stuff from https://d3g5gsiof5omrk.cloudfront.net/nixos/unstable/nixos-18.09pre143771.a8c71037e04/nixexprs.tar.xz
-  #nix-env -i \
-  #  /nix/store/q99rl8mw63dplj7hbf973n9aszxilx93-idris-1.3.0.drv \
-  #  /nix/store/nh67av50k1p803cwpxzmamar6zz646ni-idringen-0.1.0.3.drv
-
-  # Apply various configurations
-  user-apply-app-config
-}
-
-function clear-nix-cache {
-  # Sometimes the cache for pre-built binaries is out of date.
-  sudo rm /nix/var/nix/binary-cache-v3.sqlite*
-}
-
-function nix-build-closure-size {
-  du -sch $(nix-store -qR "$(nix-build "$@" --no-out-link)")
+  user-apply-config
 }

@@ -11,9 +11,13 @@ in {
     modules/keybase.nix
   ];
 
-  programs.bash.enableCompletion = true;
-
   nixpkgs.config.allowUnfree = true;
+  nix = {
+    binaryCachePublicKeys = [ ];
+    binaryCaches = [ ];
+  };
+
+  time.timeZone = "America/New_York";
 
   environment.systemPackages = with pkgs; [
     wget
@@ -23,58 +27,33 @@ in {
   location.latitude = 38.3303825;
   location.longitude = -85.7399543;
 
-  services.safeeyes.enable = false;
-  services.redshift.enable = true;
-
   users.users.${me} = {
-    extraGroups = ["adbusers"];
+    extraGroups = ["adbusers" "vboxusers"];
 
-    packages = (with pkgs; [
-      # STABLE PACKAGES
-      git-crypt
-      gnupg
-      pinentry_qt5
-    ]) ++ (with my-nixpkgs; [
-      # USER-SPECIFIED NIXPKGS
-      atom
+    packages = with my-nixpkgs; [
       binutils
-      brave
-      cabal-install
       cachix
       cloc
       colordiff
       curl
       exa
-      firefox
-      fzf
-      ghc
+      firefox-wayland
       gimp
       git
-      gitAndTools.hub
-      gitkraken
       gnugrep
       gnumake
-      google-chrome
       gzip
-      haskellPackages.ghcid
-      haskellPackages.hlint
-      haskellPackages.stack
       htop
       imagemagick7
       inotify-tools
       jq
-      kdiff3
       less
-      libreoffice
       nix-prefetch-scripts
-      obelisk
       psmisc
       rlwrap
       shellcheck
       signal-desktop
       spectacle
-      steam
-      thunderbird
       tmate
       tmux
       tree
@@ -83,7 +62,6 @@ in {
       vlc
       vscode
       wget
-
       xclip
       zip
       zoom-us
@@ -93,54 +71,52 @@ in {
       fira-code
       fira-mono
       inconsolata
-    ]);
-
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOBLTwoPAfJVfzwwWObnUfmP8c/0ocNnrd63iqQ0ftdY elliot@Elliots-MacBook-Pro.local" # my MacBook Pro
     ];
   };
 
-  # For Steam to work (https://nixos.org/nixpkgs/manual/#sec-steam-play)
-  hardware.opengl.driSupport32Bit = true;
-  hardware.pulseaudio.support32Bit = true;
-  hardware.steam-hardware.enable = true;
-
-  virtualisation.virtualbox.host.enable = true;
-  virtualisation.docker.enable = true;
-
-  services.openssh.enable = true;
-
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
+  virtualisation = {
+    docker.enable = true;
+    virtualbox.host.enable = true;
   };
 
-  programs.adb.enable = true;
-
-  networking.firewall.allowedTCPPorts = [ 80 8000 8001 ];
-
-  networking.hosts = {
+  programs = {
+    adb.enable = true;
+    bash.enableCompletion = true;
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
+    steam.enable = true;
   };
 
-  services.ddclient = {
-    enable = true;
-    server = "freedns.afraid.org";
-    protocol = "freedns";
-    domains = [ "3noch.mooo.com" ];
+  networking = {
+    firewall.allowedTCPPorts = [ 80 ];
+    hosts = {};
   };
+
+  services = {
+    openssh = {
+      enable = true;
+      passwordAuthentication = false;
+    };
+    ddclient = {
+      enable = true;
+      server = "freedns.afraid.org";
+      protocol = "freedns";
+      domains = [ "3noch.mooo.com" ];
+    };
+    udev.extraRules = ''
+      # Rule for the Ergodox EZ Original / Shine / Glow
+      SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="1307", GROUP="plugdev"
+      # Rule for the Planck EZ Standard / Glow
+      SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="6060", GROUP="plugdev"
+    '';
+    udev.packages = [
+      pkgs.android-udev-rules
+    ];
+  };
+
+  security.pam.enableSSHAgentAuth = true;
 
   hardware.ledger.enable = true;
-
-  services.udev.extraRules = ''
-    # Rule for the Ergodox EZ Original / Shine / Glow
-    SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="1307", GROUP="plugdev"
-    # Rule for the Planck EZ Standard / Glow
-    SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="6060", GROUP="plugdev"
-  '';
-  services.udev.packages = [
-    pkgs.android-udev-rules
-  ];
-
-  nix.binaryCachePublicKeys = [ "obsidian-tezos-kiln:WlSLNxlnEAdYvrwzxmNMTMrheSniCg6O4EhqCHsMvvo=" ];
-  nix.binaryCaches = [ "https://s3.eu-west-3.amazonaws.com/tezos-nix-cache" ];
 }
