@@ -9,7 +9,7 @@ in {
   imports = [
     modules/secrets.nix
     modules/vpn.nix
-    modules/keybase.nix
+    #modules/keybase.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
