@@ -125,6 +125,7 @@ in {
       enable = true;
       enableSSHSupport = true;
     };
+    mosh.enable = true;
     steam.enable = true;
   };
 
