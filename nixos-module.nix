@@ -37,6 +37,7 @@ in {
       colordiff
       curl
       exa
+      file
       firefox-wayland
       gimp
       git
@@ -48,13 +49,14 @@ in {
       inotify-tools
       jq
       less
+      nix-index
       nix-prefetch-scripts
       nodejs-12_x # for vscode remote manual patching not to get GC'ed
       psmisc
       rlwrap
       shellcheck
       signal-desktop
-      spectacle
+      teams
       tmate
       tmux
       tree
