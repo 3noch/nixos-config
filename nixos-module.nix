@@ -131,7 +131,9 @@ in {
 
   networking = {
     firewall.allowedTCPPorts = [ 80 ];
-    hosts = {};
+    hosts = {
+      "192.168.7.112" = [ "elliot-xavier" ];
+    };
   };
 
   services = {
