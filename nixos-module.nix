@@ -29,7 +29,7 @@ in {
   location.longitude = -85.7399543;
 
   users.users.${me} = {
-    extraGroups = ["adbusers" "vboxusers"];
+    extraGroups = ["adbusers" "docker" "vboxusers"];
 
     packages = with my-nixpkgs; [
       binutils
@@ -111,7 +111,10 @@ in {
   };
 
   virtualisation = {
-    docker.enable = true;
+    docker = {
+      enable = true;
+      storageDriver = "zfs";
+    };
     virtualbox.host.enable = true;
   };
 
