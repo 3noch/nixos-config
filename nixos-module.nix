@@ -170,4 +170,12 @@ in {
   security.pam.enableSSHAgentAuth = true;
 
   hardware.ledger.enable = true;
+
+  #powerManagement.enable = true;
+  #systemd.targets = {
+  #  sleep.enable = false;
+  #  suspend.enable = false;
+  #  hibernate.enable = false;
+  #  hybrid-sleep.enable = false;
+  #};
 }
