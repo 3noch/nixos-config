@@ -9,7 +9,6 @@ in {
   imports = [
     modules/secrets.nix
     modules/vpn.nix
-    #modules/keybase.nix
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -147,6 +146,8 @@ in {
       protocol = "freedns";
       domains = [ "3noch.mooo.com" ];
     };
+    keybase.enable = true;
+    kbfs.enable = true;
     udev.extraRules = ''
       # Rule for the Ergodox EZ Original / Shine / Glow
       SUBSYSTEM=="usb", ATTR{idVendor}=="feed", ATTR{idProduct}=="1307", GROUP="plugdev"
