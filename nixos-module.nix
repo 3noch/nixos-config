@@ -11,6 +11,14 @@ in {
     modules/vpn.nix
   ];
 
+  boot.extraModulePackages = [
+    config.boot.kernelPackages.v4l2loopback
+  ];
+  boot.kernelModules = [
+    "nct6775" # wanted by lm-sensors
+    "v4l2loopback" # for sharing screen as webcam
+  ];
+
   nixpkgs.config.allowUnfree = true;
   nix = {
     binaryCachePublicKeys = [ ];
