@@ -40,7 +40,6 @@ in {
 
     packages = with my-nixpkgs; [
       binutils
-      cachix
       cloc
       colordiff
       curl
