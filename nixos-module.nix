@@ -147,6 +147,7 @@ in {
     openssh = {
       enable = true;
       passwordAuthentication = false;
+      permitRootLogin = "no";
     };
     ddclient = {
       enable = true;
