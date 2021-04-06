@@ -19,6 +19,10 @@ in {
     "v4l2loopback" # for sharing screen as webcam
   ];
 
+  boot.binfmt.emulatedSystems = [
+    "aarch64-linux"
+  ];
+
   nixpkgs.config.allowUnfree = true;
   nix = {
     binaryCachePublicKeys = [ ];
@@ -39,6 +43,7 @@ in {
     extraGroups = ["adbusers" "docker" "vboxusers"];
 
     packages = with my-nixpkgs; [
+      (import dep/nix-thunk {}).command
       binutils
       cloc
       colordiff
@@ -75,6 +80,11 @@ in {
       xclip
       zip
       zoom-us
+      # (zoom-us.overrideAttrs (old: {
+      #   postFixup = old.postFixup + ''
+      #     wrapProgram $out/bin/zoom-us --unset XDG_SESSION_TYPE
+      #   '';
+      # }))
 
       # Fonts
       fira
@@ -84,7 +94,7 @@ in {
 
       # Gnome extensions
       gnomeExtensions.appindicator
-      gnomeExtensions.arc-menu
+      # gnomeExtensions.arc-menu
       # gnomeExtensions.battery-status # not needed
       gnomeExtensions.caffeine
       gnomeExtensions.clipboard-indicator
@@ -116,6 +126,8 @@ in {
     ];
   };
 
+  nixpkgs.config.firefox.enablePlasmaBrowserIntegration = true;
+
   virtualisation = {
     docker = {
       enable = true;
@@ -138,6 +150,7 @@ in {
   networking = {
     firewall.allowedTCPPorts = [ 80 ];
     hosts = {
+      "192.168.7.105" = [ "airtonomy.localdomain" ];
       "192.168.7.112" = [ "elliot-xavier" ];
     };
   };
@@ -171,11 +184,11 @@ in {
 
   hardware.ledger.enable = true;
 
-  #powerManagement.enable = true;
-  #systemd.targets = {
-  #  sleep.enable = false;
-  #  suspend.enable = false;
-  #  hibernate.enable = false;
-  #  hybrid-sleep.enable = false;
-  #};
+  powerManagement.enable = true;
+  systemd.targets = {
+    sleep.enable = false;
+    suspend.enable = false;
+    hibernate.enable = false;
+    hybrid-sleep.enable = false;
+  };
 }
