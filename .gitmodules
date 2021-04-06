@@ -1,3 +1,6 @@
 [submodule "dep/nixpkgs"]
 	path = dep/nixpkgs
 	url = https://github.com/NixOS/nixpkgs-channels.git
+[submodule "dep/nix-thunk"]
+	path = dep/nix-thunk
+	url = git@github.com:3noch/nix-thunk.git
