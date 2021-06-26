@@ -8,7 +8,6 @@
 in {
   imports = [
     modules/secrets.nix
-    modules/vpn.nix
   ];
 
   boot.extraModulePackages = [
@@ -150,8 +149,6 @@ in {
   networking = {
     firewall.allowedTCPPorts = [ 80 ];
     hosts = {
-      "192.168.7.105" = [ "airtonomy.localdomain" ];
-      "192.168.7.112" = [ "elliot-xavier" ];
     };
   };
 
